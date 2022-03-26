@@ -51,7 +51,7 @@ chrome.idle.onStateChanged.addListener((newState) => {
         chrome.storage.sync.set({'alarmState': false}); 
         timer = 0;
     } else {
-        chrome.storage.sync.set({'alarmState': false});
+        chrome.storage.sync.set({'alarmState': true});
     }
 });
 
