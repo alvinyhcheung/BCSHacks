@@ -1,10 +1,24 @@
-
+importScripts("alarmScripts.js");
 const MAXTIME = 15;
 const DEFAULT_BLACKLIST = ["reddit.com", "instagram.com", "facebook.com"];
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
+}
+
+function alarmOn() {
+	console.log("in on handler");
+	chrome.alarms.create("myAlarm", {
+		delayInMinutes: 0.1,
+		periodInMinutes: 0.01,
+	});
+}
+
+function alarmOff() {
+	console.log("in off handler");
+	chrome.alarms.clear("myAlarm");
+
 }
 
 
@@ -62,15 +76,42 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 
 chrome.idle.setDetectionInterval(15);
 
-chrome.idle.onStateChanged.addListener((newState) => {
+chrome.idle.onStateChanged.addListener(async (newState) => {
     notification(newState);
     
     console.log(`you are ${newState}`);
+
+    const currentTab = await getCurrentTab();
+
     if (newState === 'idle') {
         chrome.storage.sync.set({'alarmState': false}); 
         timer = 0;
     } else {
-        chrome.storage.sync.set({'alarmState': true});
+    
+        chrome.storage.sync.get({'blackList': DEFAULT_BLACKLIST}, (data)=> {
+            console.log(currentTab.url);
+            console.log(data.blackList);
+            if (data.blackList.some((blockedURL) => {
+                console.log(blockedURL);
+                return currentTab.url.includes(blockedURL);
+            })) {
+                console.log("turned on");
+                chrome.storage.sync.set({'alarmState': true}); 
+            } else {
+                // do nothing 
+                //console.log("turned off");
+                //chrome.storage.sync.set({'alarmState': false}); 
+            }
+        })
     }
 });
+
+chrome.storage.onChanged.addListener((changes, area) => {
+    console.log(changes);
+    if (area === 'sync' && changes.alarmState) {
+        changes.alarmState.newValue? alarmOn(): alarmOff();
+    }
+})
+
+//chrome.tabs.onUpdated.addListener()
 
