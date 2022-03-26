@@ -1,4 +1,7 @@
-const DEFAULT_LINKS = [`https://placekitten.com/${(Math.floor(Math.random()*10)+1) * 100}/${(Math.floor(Math.random()*10)+1) * 100}`, `https://placedog.net/${(Math.floor(Math.random()*10)+1) * 100}`]
+const DEFAULT_LINKS = [
+    `https://placekitten.com/${(Math.floor(Math.random()*10)+1) * 100}/${(Math.floor(Math.random()*10)+1) * 100}`,
+    `https://placedog.net/${(Math.floor(Math.random()*10)+1) * 100}`
+]
 
 function randomLink(e) {
     chrome.storage.sync.get({'storedLinks': DEFAULT_LINKS}, (data) => {
