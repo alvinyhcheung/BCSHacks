@@ -125,6 +125,12 @@ chrome.tabs.onUpdated.addListener( (tabId, changeInfo, tab) => {
                         chrome.storage.sync.set({'alarmState': true}); 
                     }
                 })
+            } else {
+                chrome.storage.sync.get({'alarmState': false} , (data) => {
+                    if (data.alarmState) {
+                        chrome.storage.sync.set({'alarmState': false}); 
+                    }
+                })
             }
         })
     }
