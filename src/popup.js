@@ -27,6 +27,7 @@ function addLinks(e) {
 
         console.log(storedLinks);
     })
+    document.getElementById('linkInput').value = '';
     //window.close();
 
 }
