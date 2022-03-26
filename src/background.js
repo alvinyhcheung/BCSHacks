@@ -1,6 +1,6 @@
 // import { randomLink } from 'popup.js';
 
-const MAXTIME = 10;
+const MAXTIME = 15;
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
@@ -31,13 +31,6 @@ function notification(newState) {
     );
 }
 
-chrome.idle.setDetectionInterval(15);
-
-chrome.idle.onStateChanged.addListener((newState) => {
-    notification(newState);
-    console.log(`you are ${newState}`);
-});
-
 let timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
 	timer = timer +1;
@@ -51,14 +44,17 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     }
 });
 
-chrome.idle.setDetectionInterval(15);
+chrome.idle.setDetectionInterval(10);
 
 chrome.idle.onStateChanged.addListener((newState) => {
     notification(newState);
     
     console.log(`you are ${newState}`);
     if (newState === 'idle') {
+        chrome.storage.sync.set({'alarmState': false}); 
         timer = 0;
+    } else {
+        chrome.storage.sync.set({'alarmState': false});
     }
 });
 
