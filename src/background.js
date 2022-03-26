@@ -12,6 +12,12 @@ chrome.tabs.onActivated.addListener(async () => {
 	console.log(`tab changed to ${currentTab.url}`);
 });
 
+chrome.notifications.onClicked.addListener(
+	(e) => {
+		chrome.windows.create();
+	}
+);
+
 function notification(newState) {
     chrome.notifications.create(
         {
@@ -21,11 +27,6 @@ function notification(newState) {
             type : 'basic'
         }
     )
-
-    chrome.notifications.onClicked.addListener(
-        (e) => {
-        }
-    );
 }
 
 let timer = 0;
