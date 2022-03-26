@@ -76,15 +76,17 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 
 chrome.idle.setDetectionInterval(15);
 
-chrome.idle.onStateChanged.addListener((newState) => {
+chrome.idle.onStateChanged.addListener(async (newState) => {
     notification(newState);
     
     console.log(`you are ${newState}`);
+
+    const currentTab = await getCurrentTab();
+
     if (newState === 'idle') {
         chrome.storage.sync.set({'alarmState': false}); 
         timer = 0;
     } else {
-        const currentTab = await getCurrentTab();
     
         chrome.storage.sync.get({'blackList': DEFAULT_BLACKLIST}, (data)=> {
             console.log(currentTab.url);
@@ -110,4 +112,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
         changes.alarmState.newValue? alarmOn(): alarmOff();
     }
 })
+
+//chrome.tabs.onUpdated.addListener()
 
