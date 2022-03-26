@@ -1,6 +1,6 @@
 
 const MAXTIME = 15;
-const DEFAULT_BLACKLIST = ["reddit.com, instagram.com, facebook.com"]
+const DEFAULT_BLACKLIST = ["reddit.com", "instagram.com", "facebook.com"];
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
@@ -13,11 +13,16 @@ chrome.tabs.onActivated.addListener(async () => {
 	const currentTab = await getCurrentTab();
     
     chrome.storage.sync.get({'blackList': DEFAULT_BLACKLIST}, (data)=> {
+        console.log(currentTab.url);
+        console.log(data.blackList);
         if (data.blackList.some((blockedURL) => {
-            return currentTab.url.contains(blcokedURL);
+            console.log(blockedURL);
+            return currentTab.url.includes(blockedURL);
         })) {
+            console.log("turned on");
             chrome.storage.sync.set({'alarmState': true}); 
         } else {
+            console.log("turned off");
             chrome.storage.sync.set({'alarmState': false}); 
         }
     })

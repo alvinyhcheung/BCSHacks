@@ -9,6 +9,7 @@ function onHandler() {
 
 	//window.close();
 }
+
 function offHandler() {
 	console.log("in off handler");
 	chrome.alarms.clear("myAlarm");
@@ -17,6 +18,7 @@ function offHandler() {
 
 	//window.close();
 }
+
 var alarmClock = {
 	toggleHandler: function (e) {
 		chrome.storage.sync.get({'alarmState': false}, (data) => {
