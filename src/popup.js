@@ -1,20 +1,22 @@
 function randomLink(e) {
     chrome.storage.sync.get('storedLinks', (data) => {
         var link = data.storedLinks[Math.floor(Math.random()*data.storedLinks.length)];
-        chrome.tabs.create({url: "https://google.com"});
-        window.close(); // Note: window.close(), not this.close()
+        console.log(link);
+        chrome.tabs.create({url: link});
+        //window.close(); // Note: window.close(), not this.close()
     })
 }
 
-function addLink(e) { 
-    console.log()
-    chrome.storage.sync.clear();
+function addLinks(e) { 
+    const url = document.getElementById('linkInput').value;
+    //chrome.storage.sync.clear();
     chrome.storage.sync.get('storedLinks', (data) => {
+        //console.log(data);
         storedLinks = data.storedLinks;
         if (storedLinks) {
-            storedLinks.push(e.targetvalue);
+            storedLinks.push(url);
         } else {
-            storedLinks = [e.targetvalue];
+            storedLinks = [url];
         }
         console.log(storedLinks);
 
@@ -22,10 +24,20 @@ function addLink(e) {
     })
     //window.close();
 }
+
+function resetLinks (e) {
+    chrome.storage.sync.clear();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('redirect').addEventListener('click', randomLink);
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('submitLink').addEventListener('click', addLink);
+    document.getElementById('submitLink').addEventListener('click', addLinks);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('resetLinks').addEventListener('click', resetLinks);
+});
+
