@@ -1,3 +1,8 @@
 body {
 	background-color: #b9ffb0;
 }
+
+.btn {
+	background-color: #E57D67;
+	outline: #E57D67;
+}
