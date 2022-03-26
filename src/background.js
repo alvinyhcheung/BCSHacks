@@ -30,13 +30,6 @@ function notification(newState) {
     );
 }
 
-chrome.idle.setDetectionInterval(15);
-
-chrome.idle.onStateChanged.addListener((newState) => {
-    notification(newState);
-    console.log(`you are ${newState}`);
-});
-
 let timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
 	timer = timer +1;
