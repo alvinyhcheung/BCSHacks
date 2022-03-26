@@ -3,7 +3,7 @@ const DEFAULT_LINKS = [
     `https://placedog.net/${(Math.floor(Math.random()*10)+1) * 100}`
 ]
 
-function randomLink(e) {
+export function randomLink(e) {
     chrome.storage.sync.get({'storedLinks': DEFAULT_LINKS}, (data) => {
         var link = data.storedLinks[Math.floor(Math.random()*data.storedLinks.length)];
         console.log(link);

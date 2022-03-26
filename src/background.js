@@ -1,3 +1,5 @@
+import { randomLink } from 'popup.js';
+
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
@@ -14,31 +16,19 @@ function notification(newState) {
         {
             title : 'STATE CHANGED',
             message : `You are ${newState}`,
-            iconUrl : 'clock.png',
-            type : 'basic',
-            buttons : [
-                {
-                    title : 'Open reddit'
-                },
-                {
-                    title : 'Cancel'
-                }
-            ]
+            iconUrl : 'assets/clock.png',
+            type : 'basic'
         }
     )
 
-    chrome.notifications.onButtonClicked.addListener(
-        (id, idx) => {
-            if (idx == 0) {
-                chrome.tabs.create({url : "https://www.reddit.com/"});
-            } else {
-                chrome.tabs.create({url : "https://www.google.com/"});
-            }
+    chrome.notifications.onClicked.addListener(
+        (e) => {
+            randomLink(e);
         }
     );
 }
 
-chrome.idle.setDetectionInterval(1800);
+chrome.idle.setDetectionInterval(15);
 
 chrome.idle.onStateChanged.addListener((newState) => {
     notification(newState);
