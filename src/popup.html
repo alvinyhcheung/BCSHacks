@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<head>
+  <script src = "popup.js"></script>
+  <script src = "alarm.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="description" content="Birthday Party">
+  <title>BCS HACKS</title>
+  <link rel="stylesheet" href="main.css">
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">-->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
 <html>
   <h1>
     Happy birthday Thea! Woohoo
@@ -7,4 +20,23 @@
     Header 2
     And Dani
   </h2>
+
+  <button type="button" class="btn btn-info btn-rounded active">
+    On/Off
+  </button>
+  <button type="button" class="btn btn-info btn-rounded active" id = "redirect">
+    take me to somewhere else 
+  </button>
+  <div class = "mb-3"> 
+    <label for="linkInput" class = "form-label">Add a new URL</label>
+    <input type ="url" class ="form-control" id = "linkInput" placeholder = "google.com">
+  </div> 
+  <button type="submitLink" class="btn btn-primary" id = "submitLink">Add Link</button>
+
+  <button type="button" class="btn btn-dark btn-rounded active">
+    Settings
+  </button>
+</body>
+
+
 </html>
