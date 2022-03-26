@@ -1,22 +1,15 @@
+//mportScripts("alarmScripts.js");
+
 function onHandler() {
-	console.log("in on handler");
-	chrome.alarms.create("myAlarm", {
-		delayInMinutes: 0.1,
-		periodInMinutes: 0.01,
-	});
+	//alarmOn();
 	document.getElementById('alarmToggle').style['background-color'] = '#81A39D';
 	document.getElementById('alarmToggle').innerHTML = "Disable";
-
-	//window.close();
 }
 
 function offHandler() {
-	console.log("in off handler");
-	chrome.alarms.clear("myAlarm");
+	//alarmOff();
 	document.getElementById('alarmToggle').style['background-color'] = '#97BEB7';
 	document.getElementById('alarmToggle').innerHTML = "Enable";
-
-	//window.close();
 }
 
 var alarmClock = {
@@ -36,6 +29,10 @@ var alarmClock = {
 		// a.addEventListener("click", alarmClock.offHandler);
 		document.getElementById("alarmToggle").addEventListener("click", alarmClock.toggleHandler);
 		// TODO: add listener for storage
+		chrome.storage.sync.get({'alarmState': false}, (data) => {
+			data.alarmState? onHandler():offHandler();
+		})
+
 		chrome.storage.onChanged.addListener((changes, area) => {
 			console.log(changes);
 			if (area === 'sync' && changes.alarmState) {
@@ -47,7 +44,7 @@ var alarmClock = {
 
 document.addEventListener("DOMContentLoaded", function () {
 	alarmClock.setup();
-	chrome.storage.sync.set({'alarmState': false}); 
+	//chrome.storage.sync.set({'alarmState': false}); 
 });
 
 function openTab(evt, tabName) {

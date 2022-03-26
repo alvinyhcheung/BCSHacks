@@ -1,10 +1,24 @@
-
+importScripts("alarmScripts.js");
 const MAXTIME = 15;
 const DEFAULT_BLACKLIST = ["reddit.com", "instagram.com", "facebook.com"];
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
+}
+
+function alarmOn() {
+	console.log("in on handler");
+	chrome.alarms.create("myAlarm", {
+		delayInMinutes: 0.1,
+		periodInMinutes: 0.01,
+	});
+}
+
+function alarmOff() {
+	console.log("in off handler");
+	chrome.alarms.clear("myAlarm");
+
 }
 
 
@@ -73,4 +87,11 @@ chrome.idle.onStateChanged.addListener((newState) => {
         chrome.storage.sync.set({'alarmState': true});
     }
 });
+
+chrome.storage.onChanged.addListener((changes, area) => {
+    console.log(changes);
+    if (area === 'sync' && changes.alarmState) {
+        changes.alarmState.newValue? alarmOn(): alarmOff();
+    }
+})
 
