@@ -84,7 +84,23 @@ chrome.idle.onStateChanged.addListener((newState) => {
         chrome.storage.sync.set({'alarmState': false}); 
         timer = 0;
     } else {
-        chrome.storage.sync.set({'alarmState': true});
+        const currentTab = await getCurrentTab();
+    
+        chrome.storage.sync.get({'blackList': DEFAULT_BLACKLIST}, (data)=> {
+            console.log(currentTab.url);
+            console.log(data.blackList);
+            if (data.blackList.some((blockedURL) => {
+                console.log(blockedURL);
+                return currentTab.url.includes(blockedURL);
+            })) {
+                console.log("turned on");
+                chrome.storage.sync.set({'alarmState': true}); 
+            } else {
+                // do nothing 
+                //console.log("turned off");
+                //chrome.storage.sync.set({'alarmState': false}); 
+            }
+        })
     }
 });
 
