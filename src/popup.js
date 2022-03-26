@@ -27,6 +27,7 @@ function addLinks(e) {
 
         console.log(storedLinks);
     })
+    document.getElementById('linkInput').value = '';
     //window.close();
 
 }
@@ -36,9 +37,9 @@ function resetLinks (e) {
     console.log(`storage reset`);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('redirect').addEventListener('click', randomLink);
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     document.getElementById('redirect').addEventListener('click', randomLink);
+// });
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submitLink').addEventListener('click', addLinks);

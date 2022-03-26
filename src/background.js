@@ -1,8 +1,11 @@
+
+const MAXTIME = 15;
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
 }
+
 
 chrome.tabs.onActivated.addListener(async () => {
 	const currentTab = await getCurrentTab();
@@ -14,43 +17,41 @@ function notification(newState) {
         {
             title : 'STATE CHANGED',
             message : `You are ${newState}`,
-            iconUrl : 'clock.png',
-            type : 'basic',
-            buttons : [
-                {
-                    title : 'Open reddit'
-                },
-                {
-                    title : 'Cancel'
-                }
-            ]
+            iconUrl : 'assets/clock.png',
+            type : 'basic'
         }
     )
 
-    chrome.notifications.onButtonClicked.addListener(
-        (id, idx) => {
-            if (idx == 0) {
-                chrome.tabs.create({url : "https://www.reddit.com/"});
-            } else {
-                chrome.tabs.create({url : "https://www.google.com/"});
-            }
+    chrome.notifications.onClicked.addListener(
+        (e) => {
         }
     );
 }
 
-chrome.idle.setDetectionInterval(1800);
-
-chrome.idle.onStateChanged.addListener((newState) => {
-    notification(newState);
-    console.log(`you are ${newState}`);
-});
-
-var timer = 0;
+let timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
 	timer = timer +1;
 	if(timer %5 ==0) {
 		console.log(`The timer is ${timer}`);
 	}
-	
+    if (timer > MAXTIME) { 
+        chrome.storage.sync.set({'alarmState': false}); 
+        notification("in big trouble mister");         
+        timer = 0;
+    }
+});
+
+chrome.idle.setDetectionInterval(15);
+
+chrome.idle.onStateChanged.addListener((newState) => {
+    notification(newState);
+    
+    console.log(`you are ${newState}`);
+    if (newState === 'idle') {
+        chrome.storage.sync.set({'alarmState': false}); 
+        timer = 0;
+    } else {
+        chrome.storage.sync.set({'alarmState': true});
+    }
 });
 

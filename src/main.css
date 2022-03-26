@@ -1,9 +1,40 @@
+h1 {
+	color: #FEF2C9;
+}
+
 body {
-	background-color: #b9ffb0;
+	background-color: #A8CFC8;
+	padding: 25px;
 	min-width : 350px;
 }
 
+div {
+	padding: 5px;
+}
+
 .btn {
-	background-color: #E57D67;
-	outline: #E57D67;
+	background-color: #81A39D;
+	border-color: #A8CFC8;
+	border-radius: 12px;
+}
+
+.btn:hover {
+	background-color: #97BEB7;
+	border-color: #A8CFC8;
+}
+
+input[type=text] {
+	border: 2px solid rgba(0, 153, 255, 0.651);
+	border-radius: 4px;
+	width: 80%
+  }
+
+#resetLinks {
+	background-color: #97BEB7;
+	border-color: #97BEB7;
+}
+
+#resetLinks:hover {
+	background-color: #81A39D;
+	border-color: #97BEB7;
 }
