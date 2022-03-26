@@ -47,13 +47,8 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 		console.log(`The timer is ${timer}`);
 	}
     if (timer > MAXTIME) { 
-        console.log("in big trouble mister");
-        chrome.storage.sync.get({'alarmState': false}, (data) => {
-			const newState = !data.alarmState;
-			newState? onHandler():offHandler();
-			chrome.storage.sync.set({'alarmState': newState});
-			console.log(newState);
-		});
+        chrome.storage.sync.set({'alarmState': false}); 
+        notification("in big trouble mister");         
         timer = 0;
     }
 });
