@@ -113,5 +113,20 @@ chrome.storage.onChanged.addListener((changes, area) => {
     }
 })
 
-//chrome.tabs.onUpdated.addListener()
+chrome.tabs.onUpdated.addListener( (tabId, changeInfo, tab) => {
+    if (changeInfo.url) {
+        chrome.storage.sync.get({'blackList': DEFAULT_BLACKLIST}, (data)=> {
+            if (data.blackList.some((blockedURL) => {
+                console.log(blockedURL);
+                return changeInfo.url.includes(blockedURL);
+            })) {
+                chrome.storage.sync.get({'alarmState': false} , (data) => {
+                    if (!data.alarmState) {
+                        chrome.storage.sync.set({'alarmState': true}); 
+                    }
+                })
+            }
+        })
+    }
+})
 
