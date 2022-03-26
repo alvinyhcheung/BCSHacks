@@ -44,3 +44,36 @@ input[type=text] {
 	background-color: #81A39D;
 	border-color: #97BEB7;
 }
+
+.tab {
+	overflow: hidden;
+	border-color: #97BEB7;
+	border-radius: 5px;
+}
+
+.tab button {
+	background-color: inherit;
+	float: left;
+	border: 0.5;
+	border-color: #81A39D;
+	border-radius: 5px;
+	border-style: none;
+	cursor: pointer;
+	padding: 5px;
+	transition: 0.5s;
+}
+
+.tab button:hover {
+  background-color: #FEF2C9;
+}
+  
+.tab button.active {
+  background-color: #FEF2C9;
+}
+
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+  }
