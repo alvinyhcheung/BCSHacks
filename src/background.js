@@ -1,8 +1,10 @@
+const MAXTIME = 10;
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
 }
+
 
 chrome.tabs.onActivated.addListener(async () => {
 	const currentTab = await getCurrentTab();
@@ -38,19 +40,32 @@ function notification(newState) {
     );
 }
 
-chrome.idle.setDetectionInterval(15);
-
-chrome.idle.onStateChanged.addListener((newState) => {
-    notification(newState);
-    console.log(`you are ${newState}`);
-});
-
-var timer = 0;
+let timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
 	timer = timer +1;
 	if(timer %5 ==0) {
 		console.log(`The timer is ${timer}`);
 	}
-	
+    if (timer > MAXTIME) { 
+        console.log("in big trouble mister");
+        chrome.storage.sync.get({'alarmState': false}, (data) => {
+			const newState = !data.alarmState;
+			newState? onHandler():offHandler();
+			chrome.storage.sync.set({'alarmState': newState});
+			console.log(newState);
+		});
+        timer = 0;
+    }
+});
+
+chrome.idle.setDetectionInterval(15);
+
+chrome.idle.onStateChanged.addListener((newState) => {
+    notification(newState);
+    
+    console.log(`you are ${newState}`);
+    if (newState === 'idle') {
+        timer = 0;
+    }
 });
 
