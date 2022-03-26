@@ -4,14 +4,16 @@ function onHandler() {
 		delayInMinutes: 0.1,
 		periodInMinutes: 0.01,
 	});
-	document.getElementById('alarmToggle').style['background-color'] = 'red';
+	document.getElementById('alarmToggle').style['background-color'] = '#81A39D';
+	document.getElementById('alarmToggle').value = "disable";
 
 	//window.close();
 }
 function offHandler() {
 	console.log("in off handler");
 	chrome.alarms.clear("myAlarm");
-	document.getElementById('alarmToggle').style['background-color'] = 'blue';
+	document.getElementById('alarmToggle').style['background-color'] = '#97BEB7';
+	document.getElementById('alarmToggle').value = "enable";
 
 	//window.close();
 }
