@@ -15,8 +15,7 @@ chrome.idle.onStateChanged.addListener((newState) => {
 	console.log(`you are ${newState}`);
 });
 
-var timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
-	timer = timer + 1;
-	console.log(`The timer is now: ${timer}`);
+	console.log(`WHAT THE ALARM DOES FROM BACKGROUND`);
 });
+
