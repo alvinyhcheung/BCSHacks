@@ -1,11 +1,21 @@
+h1 {
+	color: #FEF2C9;
+}
+
 body {
 	background-color: #A8CFC8;
+	padding: 25px;
 	min-width : 350px;
+}
+
+div {
+	padding: 5px;
 }
 
 .btn {
 	background-color: #81A39D;
 	border-color: #A8CFC8;
+	border-radius: 12px;
 }
 
 .btn:hover {
