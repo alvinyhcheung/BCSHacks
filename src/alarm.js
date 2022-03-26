@@ -2,7 +2,7 @@ var alarmClock = {
 	onHandler: function (e) {
 		chrome.alarms.create("myAlarm", {
 			delayInMinutes: 0.1,
-			periodInMinutes: 0.2,
+			periodInMinutes: 0.01,
 		});
 		window.close();
 	},

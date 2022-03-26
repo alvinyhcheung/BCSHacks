@@ -9,14 +9,48 @@ chrome.tabs.onActivated.addListener(async () => {
 	console.log(`tab changed to ${currentTab.url}`);
 });
 
+function notification(newState) {
+    chrome.notifications.create(
+        {
+            title : 'STATE CHANGED',
+            message : `You are ${newState}`,
+            iconUrl : 'clock.png',
+            type : 'basic',
+            buttons : [
+                {
+                    title : 'Open reddit'
+                },
+                {
+                    title : 'Cancel'
+                }
+            ]
+        }
+    )
+
+    chrome.notifications.onButtonClicked.addListener(
+        (id, idx) => {
+            if (idx == 0) {
+                chrome.tabs.create({url : "https://www.reddit.com/"});
+            } else {
+                chrome.tabs.create({url : "https://www.google.com/"});
+            }
+        }
+    );
+}
+
 chrome.idle.setDetectionInterval(15);
 
 chrome.idle.onStateChanged.addListener((newState) => {
-	console.log(`you are ${newState}`);
+    notification(newState);
+    console.log(`you are ${newState}`);
 });
 
 var timer = 0;
 chrome.alarms.onAlarm.addListener(function (alarm) {
-	timer = timer + 1;
-	console.log(`The timer is now: ${timer}`);
+	timer = timer +1;
+	if(timer %5 ==0) {
+		console.log(`The timer is ${timer}`);
+	}
+	
 });
+
