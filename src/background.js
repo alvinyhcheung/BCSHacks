@@ -38,7 +38,7 @@ function notification(newState) {
     );
 }
 
-chrome.idle.setDetectionInterval(15);
+chrome.idle.setDetectionInterval(1800);
 
 chrome.idle.onStateChanged.addListener((newState) => {
     notification(newState);
