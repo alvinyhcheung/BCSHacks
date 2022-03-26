@@ -1,4 +1,4 @@
-import { randomLink } from 'popup.js';
+// import { randomLink } from 'popup.js';
 
 const MAXTIME = 10;
 async function getCurrentTab() {
@@ -25,7 +25,8 @@ function notification(newState) {
 
     chrome.notifications.onClicked.addListener(
         (e) => {
-            randomLink(e);
+            // randomLink(e);
+            chrome.tabs.create({url : "https://www.reddit.com/"});
         }
     );
 }
