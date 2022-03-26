@@ -4,12 +4,15 @@ function onHandler() {
 		delayInMinutes: 0.1,
 		periodInMinutes: 0.01,
 	});
+	document.getElementById('alarmToggle').style['background-color'] = 'red';
+
 	//window.close();
 }
 function offHandler() {
 	console.log("in off handler");
-
 	chrome.alarms.clear("myAlarm");
+	document.getElementById('alarmToggle').style['background-color'] = 'blue';
+
 	//window.close();
 }
 var alarmClock = {
@@ -40,4 +43,5 @@ var alarmClock = {
 
 document.addEventListener("DOMContentLoaded", function () {
 	alarmClock.setup();
+	chrome.storage.sync.set({'alarmState': false}); 
 });
