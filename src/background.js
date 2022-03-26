@@ -1,4 +1,3 @@
-import { randomLink } from 'popup.js';
 
 const MAXTIME = 15;
 async function getCurrentTab() {
@@ -25,7 +24,6 @@ function notification(newState) {
 
     chrome.notifications.onClicked.addListener(
         (e) => {
-            randomLink(e);
         }
     );
 }
@@ -43,7 +41,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     }
 });
 
-chrome.idle.setDetectionInterval(10);
+chrome.idle.setDetectionInterval(15);
 
 chrome.idle.onStateChanged.addListener((newState) => {
     notification(newState);
