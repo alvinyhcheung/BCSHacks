@@ -1,6 +1,8 @@
 const DEFAULT_LINKS = [
-    `https://placekitten.com/${(Math.floor(Math.random()*10)+1) * 100}/${(Math.floor(Math.random()*10)+1) * 100}`,
-    `https://placedog.net/${(Math.floor(Math.random()*10)+1) * 100}`
+    `https://i.imgur.com/CyWTP3S.jpg`,
+    `https://i.imgur.com/7uGzZ8A.jpg`,
+    `https://i.imgur.com/W7YSWlz.jpg`,
+    `https://i.imgur.com/M3djSgP.jpg`
 ];
 
 const DEFAULT_BLACKLIST = ["reddit.com", "instagram.com", "facebook.com"];

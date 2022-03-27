@@ -1,10 +1,25 @@
 importScripts("alarmScripts.js");
-const MAXTIME = 15;
+const MAXTIME = 5;
 const DEFAULT_BLACKLIST = ["reddit.com", "instagram.com", "facebook.com"];
 async function getCurrentTab() {
 	let queryOptions = { active: true, currentWindow: true };
 	let [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
+}
+
+const DEFAULT_LINKS = [
+    `https://i.imgur.com/CyWTP3S.jpg`,
+    `https://i.imgur.com/7uGzZ8A.jpg`,
+    `https://i.imgur.com/W7YSWlz.jpg`,
+    `https://i.imgur.com/M3djSgP.jpg`
+];
+
+function randomLink(e) {
+    chrome.storage.sync.get({'storedLinks': DEFAULT_LINKS}, (data) => {
+        var link = data.storedLinks[Math.floor(Math.random()*data.storedLinks.length)];
+        console.log(link);
+        chrome.tabs.create({url: link});
+    })
 }
 
 function alarmOn() {
@@ -69,6 +84,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 	}
     if (timer > MAXTIME) { 
         chrome.storage.sync.set({'alarmState': false}); 
+        randomLink();
         notification("in big trouble mister");         
         timer = 0;
     }
