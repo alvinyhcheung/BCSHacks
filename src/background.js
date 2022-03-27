@@ -53,9 +53,9 @@ chrome.notifications.onClicked.addListener(
 function notification(newState) {
     chrome.notifications.create(
         {
-            title : 'STATE CHANGED',
-            message : `You are ${newState}`,
-            iconUrl : 'assets/clock.png',
+            title : 'This is a scheduled interrupt',
+            message : 'Click this message to be redirected',
+            iconUrl : 'icon.png',
             type : 'basic'
         }
     )
@@ -77,7 +77,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 chrome.idle.setDetectionInterval(15);
 
 chrome.idle.onStateChanged.addListener(async (newState) => {
-    notification(newState);
+    // notification(newState);
     
     console.log(`you are ${newState}`);
 
